@@ -1,0 +1,13 @@
+# Windows
+Thumbs.db
+desktop.ini
+
+# macOS
+.DS_Store
+
+# Editor files
+.vscode/
+*.code-workspace
+
+# Node (in case Tailwind CLI is added later)
+node_modules/
