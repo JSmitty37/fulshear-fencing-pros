@@ -94,15 +94,36 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
   /* ---------- FORM HANDLING ---------- */
-  document.querySelectorAll('form[data-form]').forEach(form => {
+  // Post all site forms directly to the Zapier Catch Hook.
+  // Using mode:'no-cors' avoids CORS preflight while still delivering
+  // the payload; we redirect to thank-you.html on completion.
+  const ZAPIER_HOOK = 'https://hooks.zapier.com/hooks/catch/24209228/43yogd0/';
+
+  document.querySelectorAll('form').forEach(form => {
+    if (!form.action || !form.action.includes('hooks.zapier.com')) return;
+
     form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
       const btn = form.querySelector('button[type="submit"]');
-      if (btn) {
-        btn.textContent = 'Sending…';
-        btn.disabled = true;
-      }
-      // Formspree handles the POST; let it proceed naturally
-      // If you add AJAX submission, prevent default here
+      if (btn) { btn.textContent = 'Sending…'; btn.disabled = true; }
+
+      // Build URL-encoded body from all named form fields
+      const body = new URLSearchParams(new FormData(form)).toString();
+
+      fetch(ZAPIER_HOOK, {
+        method: 'POST',
+        mode: 'no-cors',   // avoids CORS preflight; response is opaque but data goes through
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body
+      })
+      .then(() => {
+        window.location.href = '/thank-you.html';
+      })
+      .catch(() => {
+        if (btn) { btn.textContent = 'Send Request — We\'ll Call You'; btn.disabled = false; }
+        alert('Something went wrong. Please call us at (832) 734-9878 or try again.');
+      });
     });
   });
 
