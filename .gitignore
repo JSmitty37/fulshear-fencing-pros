@@ -11,3 +11,9 @@ desktop.ini
 
 # Node (in case Tailwind CLI is added later)
 node_modules/
+
+# Source photos — not served. Optimized, web-sized copies live in /images.
+Stock Photos/
+
+# Local helper scripts
+*.ps1
