@@ -1,0 +1,13 @@
+{
+  "name": "fulshear-fencing-pros",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static marketing site for Fulshear Fencing Pros (GitHub Pages).",
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i src/tailwind.css -o css/tailwind.css --minify",
+    "watch:css": "tailwindcss -c tailwind.config.js -i src/tailwind.css -o css/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

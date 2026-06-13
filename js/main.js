@@ -30,40 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ---------- TESTIMONIAL CAROUSEL ---------- */
-  const track = document.getElementById('testimonial-track');
-  const dots = document.querySelectorAll('.dot-btn');
-  if (track && dots.length) {
-    let current = 0;
-    const slides = track.querySelectorAll('.testimonial-slide');
-    const total = slides.length;
-
-    function goTo(idx) {
-      current = (idx + total) % total;
-      track.style.transform = `translateX(-${current * 100}%)`;
-      dots.forEach((d, i) => d.classList.toggle('active', i === current));
-    }
-
-    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
-    goTo(0);
-
-    // Auto-advance every 5 seconds
-    let timer = setInterval(() => goTo(current + 1), 5000);
-    track.closest('.testimonial-wrap')?.addEventListener('mouseenter', () => clearInterval(timer));
-    track.closest('.testimonial-wrap')?.addEventListener('mouseleave', () => {
-      timer = setInterval(() => goTo(current + 1), 5000);
-    });
-
-    // Touch/swipe support
-    let startX = 0;
-    const el = track.parentElement;
-    el.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-    el.addEventListener('touchend', e => {
-      const diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
-    });
-  }
-
   /* ---------- FAQ ACCORDION ---------- */
   document.querySelectorAll('.faq-btn').forEach(btn => {
     btn.addEventListener('click', () => {
