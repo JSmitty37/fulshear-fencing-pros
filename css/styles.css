@@ -102,6 +102,16 @@ img { max-width: 100%; display: block; }
   background-repeat: no-repeat;
 }
 
+/* Homepage hero image — WebP with JPEG fallback (last understood rule wins) */
+.hero-home-bg {
+  background-image: url('/assets/images/cedar-privacy-fence-fulshear.jpg');
+  background-image: -webkit-image-set(url('/assets/images/cedar-privacy-fence-fulshear.webp') type('image/webp'), url('/assets/images/cedar-privacy-fence-fulshear.jpg') type('image/jpeg'));
+  background-image: image-set(url('/assets/images/cedar-privacy-fence-fulshear.webp') type('image/webp'), url('/assets/images/cedar-privacy-fence-fulshear.jpg') type('image/jpeg'));
+}
+
+/* <picture> wrappers must not affect layout — the inner <img> behaves as a direct child */
+picture { display: contents; }
+
 .hero-overlay {
   position: absolute;
   inset: 0;
